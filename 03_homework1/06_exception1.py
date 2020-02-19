@@ -23,7 +23,7 @@ def ask_user_dict():
             for key in dict_of_questions:
                 if question == key:
                     print(dict_of_questions[key])
-        except KeyboardInterrupt:
+        except KeyboardInterrupt:  # Если запускать с консоли, то ко Ctrl+C выходит. Но если с IDE - не реагирует
             print('Вы выходите из программы')
             break
 
