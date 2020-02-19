@@ -1,10 +1,6 @@
-# Импортируем нужные компоненты
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import logging
-
-# Настройки прокси
-PROXY = {'proxy_url': 'socks5://t3.learn.python.ru:1080',
-         'urllib3_proxy_kwargs': {'username': 'learn', 'password': 'python'}}
+import settings
 
 logging.basicConfig(format='Time: %(asctime)s - Name: %(name)s - Level: %(levelname)s - Message: %(message)s',
                     level=logging.INFO,
@@ -30,7 +26,7 @@ def talk_to_me(update, context):
 
 # Функция, которая соединяется с платформой Telegram, "тело" нашего бота
 def main():
-    mybot = Updater('', request_kwargs=PROXY, use_context=True)
+    mybot = Updater(settings.api_key, request_kwargs=settings.PROXY, use_context=True)
 
     logging.info('Бот запускается')
 

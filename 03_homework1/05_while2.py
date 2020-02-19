@@ -14,12 +14,20 @@
     Программа: Программирую
     
 """
+dict_of_questions = {
+    'Как дела?': 'Хорошо!',
+    'Что делаешь?': 'Программирую',
+    'Вопрос': 'Ответ'
+}
 
-def ask_user():
-    """
-    Замените pass на ваш код
-    """
-    pass
-    
+
+def ask_user_dict():
+    while True:
+        question = input('Введите ваш вопрос:\n')
+        for key in dict_of_questions:
+            if question == key:
+                print(dict_of_questions[key])
+
+
 if __name__ == "__main__":
-    ask_user()
+    ask_user_dict()
