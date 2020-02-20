@@ -21,7 +21,7 @@ def ask_user_dict():
         try:
             question = input('Введите ваш вопрос:\n')
             if question in dict_of_questions:
-                print(dict_of_questions[f'{question}'])
+                print(dict_of_questions[question])
         except KeyboardInterrupt:  # Если запускать с консоли, то ко Ctrl+C выходит. Но если с IDE - не реагирует
             print('Вы выходите из программы')
             break
