@@ -24,9 +24,8 @@ dict_of_questions = {
 def ask_user_dict():
     while True:
         question = input('Введите ваш вопрос:\n')
-        for key in dict_of_questions:
-            if question == key:
-                print(dict_of_questions[key])
+        if question in dict_of_questions:
+            print(dict_of_questions[f'{question}'])
 
 
 if __name__ == "__main__":
