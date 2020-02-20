@@ -13,14 +13,6 @@
 * Вывести содержимое переменной на экран
 
 """
-your_age = input('Введите ваш возраст:\n')
-
-while not your_age.isdigit():
-    your_age = input('Вы ввели не число. Введите число:\n')
-
-if your_age.isdigit():
-    your_age = int(your_age)
-
 
 def main(age):
     if 0 < age <= 6:
@@ -38,4 +30,11 @@ def main(age):
 
 
 if __name__ == "__main__":
+    your_age = input('Введите ваш возраст:\n')
+
+    while not your_age.isdigit():
+        your_age = input('Вы ввели не число. Введите число:\n')
+
+    if your_age.isdigit():
+        your_age = int(your_age)
     main(your_age)

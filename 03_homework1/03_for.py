@@ -19,9 +19,8 @@ all_summary = []
 def main(list_from_school):
     for element in list_from_school:
         print(f'Для класса {element["school_class"]}:')
-        s = sum(element['scores'])
         print(f"Оценки в списке: {element['scores']}")
-        print(f"Средняя оценка класса {s / len(element['scores'])}\n")
+        print(f"Средняя оценка класса {sum(element['scores']) / len(element['scores'])}\n")
         for numbers in element['scores']:
             all_summary.append(numbers)
     print(f'Средняя оценка по школе: {sum(all_summary) / len(all_summary)}')
