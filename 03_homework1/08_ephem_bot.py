@@ -57,7 +57,7 @@ def helping(update, context):
     for element in ephem._libastro.builtin_planets():
         if element[1] == 'Planet':
             list_of_planets.append(element[2])
-    reply = f'Вы пожете узнать, в каком созвездии находится планета ' \
+    reply = f'Вы пожете узнать, в каком созвездии находится планета, ' \
             f'если наберете /planet *планета* \nНапример, /planet Venus' \
             f'\nСписок планет: {list_of_planets}'
     update.message.reply_text(reply)
