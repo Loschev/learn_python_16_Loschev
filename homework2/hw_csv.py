@@ -15,7 +15,7 @@ user_list = [
     {'first_name': 'Amhanda', 'last_name': 'Scoftt', 'email': 'asgcott1@sgkyrock.com', 'gender': 'Female', 'balance': '99.5'}
     ]
 
-with open('export.csv', 'w', encoding='utf-8') as my_file:
+with open('export.csv', 'w', encoding='utf-8', newline='') as my_file:
     fields = ['first_name', 'last_name', 'email', 'gender', 'balance']
     writer = csv.DictWriter(my_file, fields, delimiter=';')
     writer.writeheader()
