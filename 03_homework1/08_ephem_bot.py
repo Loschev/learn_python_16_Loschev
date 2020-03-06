@@ -12,11 +12,15 @@
   бота отвечать, в каком созвездии сегодня находится планета.
 
 """
+from glob import glob
 import logging
-import settings  # Настройки прокси и ключ от телеграма лежат в файле настроек, чтобы не передавать в git.
+from random import choice
 import ephem
+import re
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+
+import settings  # Настройки прокси и ключ от телеграма лежат в файле настроек, чтобы не передавать в git.
 
 logging.basicConfig(format='%(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO,
@@ -27,17 +31,22 @@ logging.basicConfig(format='%(name)s - %(levelname)s - %(message)s',
 def greet_user(update, context):
     print(f'Пользователь {update.message.chat["first_name"]} {update.message.chat["last_name"]} написал /start')
     update.message.reply_text(f'Привет, {update.message.chat["first_name"]}! Вызван /start \n'
-                              f'Для получения справки можете набрать /help')
+                              f'Для получения справки можете набрать /help \n'
+                              f'Для получения картинки котика можете набрать /cat')
 
 
 def talk_to_me(update, context):
-    user_text = f'Спасибо за сообщение, {update.message.chat["first_name"]} {update.message.chat["last_name"]}! \n' \
-                f'Ваш ник @{update.message.chat["username"]}\n' \
-                f'Вы написали сообщение: {update.message.text}'
+    if re.search(r'кот|кота|котейку|пушистого|пушистика|пушистый|пушистик', update.message.text.lower()):
+        send_cat_picture(update, context)
+
+    else:
+        user_text = f'Спасибо за сообщение, {update.message.chat["first_name"]} {update.message.chat["last_name"]}! \n' \
+                    f'Ваш ник @{update.message.chat["username"]}\n' \
+                    f'Вы написали сообщение: {update.message.text}'
+        print(update.message)
+        update.message.reply_text(user_text)
     logging.info(f'User: {update.message.chat["username"]}, Chat id: {update.message.chat["id"]}, '
                  f'Message: {update.message.text}')
-    print(update.message)
-    update.message.reply_text(user_text)
 
 
 def planet(update, context):
@@ -54,6 +63,7 @@ def planet(update, context):
 
 def helping(update, context):
     list_of_planets = []
+    print(ephem._libastro.builtin_planets())
     for element in ephem._libastro.builtin_planets():
         if element[1] == 'Planet':
             list_of_planets.append(element[2])
@@ -63,12 +73,19 @@ def helping(update, context):
     update.message.reply_text(reply)
 
 
+def send_cat_picture(update, context):
+    cat_list = glob('images/cat*.jp*g')
+    cat_pic = choice(cat_list)
+    context.bot.send_photo(chat_id=update.message.chat["id"], photo=open(cat_pic, 'rb'))
+
+
 def main():
     mybot = Updater(settings.api_key, request_kwargs=settings.PROXY, use_context=True)
     logging.info('Бот запускается')
     mybot.dispatcher.add_handler(CommandHandler('start', greet_user))
     mybot.dispatcher.add_handler(CommandHandler('planet', planet))
     mybot.dispatcher.add_handler(CommandHandler('help', helping))
+    mybot.dispatcher.add_handler(CommandHandler('cat', send_cat_picture))
     mybot.dispatcher.add_handler(MessageHandler(Filters.text, talk_to_me))
 
     mybot.start_polling()
