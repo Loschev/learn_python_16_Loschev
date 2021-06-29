@@ -36,7 +36,7 @@ def greet_user(update, context):
 
 
 def talk_to_me(update, context):
-    if re.search(r'кот|кота|котейку|пушистого|пушистика|пушистый|пушистик', update.message.text.lower()):
+    if re.search(r'кот|кошка|кошку|котика|кота|котейку|пушистого|пушистика|пушистый|пушистик', update.message.text.lower()):
         send_cat_picture(update, context)
 
     else:
